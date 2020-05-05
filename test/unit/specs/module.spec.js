@@ -12,17 +12,7 @@ describe('ti.imagefactory', function () {
 
 	beforeEach(() => {
 		var imageFilename = "flower.jpg";
-		const blob = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory + imageFilename).read();
-		var newBlob = imagefactory.imageWithAlpha(blob, {format: imagefactory.PNG });
-		newBlob = ImageFactory.imageWithTransparentBorder(blob, { borderSize: 10, format: ImageFactory.PNG });
-		newBlob = ImageFactory.imageAsCropped(blob, { width: 100, height: 100, x: 50, y: 50 });
-		newBlob = ImageFactory.imageWithRoundedCorner(blob, { borderSize: 4, cornerRadius: 8, format: ImageFactory.PNG });
-		newBlob = ImageFactory.imageAsThumbnail(blob, { size: 64, borderSize: 5, cornerRadius: 10, format: ImageFactory.PNG });
-		newBlob = ImageFactory.imageAsResized(blob, { width: 140, height: 140 });
-		newBlob = ImageFactory.imageTransform(blob,
-					{ type: ImageFactory.TRANSFORM_CROP, width: 200, height: 200 },
-					{ type: ImageFactory.TRANSFORM_ROUNDEDCORNER, borderSize: 6, cornerRadius: 20, format: ImageFactory.PNG }
-				);
+		var newBlob = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory + imageFilename).read();
 		});
 
 	describe('constants', () => {
@@ -114,7 +104,50 @@ describe('ti.imagefactory', function () {
 				it('to creates a copy of this image with rounded corners',  () =>{
 					var cornerSize = 8;
 					var borderSize = 4;
-					expect(imagefactory.roundedCornerImage(newBlob,cornerSize,borderSize)).toEqual(newBlob);
+					var roundedImage = imagefactory.roundedCornerImage(newBlob,cornerSize,borderSize)
+					expect(roundedImage).toEqual(newBlob);
+				});
+			});
+			describe('imageCrop',  () =>{
+				it('to crop image as per given coordinates',  () =>{
+					var newParam = { width: 100, height: 100, x: 50, y: 50 };
+					expect(imagefactory.imageAsCropped(blob,newParam)).toEqual(jasmine.any(Function));
+				});
+			});
+			describe('imageResize',  () =>{
+				it('to resize the image for given width anf height',  () =>{
+					var newParam = { width: 140, height: 140 };
+					expect(imagefactory.imageResize(blob,newParam)).toEqual(jasmine.any(Function));
+				});
+			});
+			describe('imageThumbnail',  () =>{
+				it('to create image thumbnail',  () =>{
+					var newParam = { size: 64, borderSize: 5, cornerRadius: 10, format: ImageFactory.PNG };
+					expect(imagefactory.imageThumbnail(blob,newParam)).toEqual(jasmine.any(Function));
+				});
+			});
+			describe('imageRoundedCorner',  () =>{
+				it('to make the rounded corner image',  () =>{
+					var newParam = { borderSize: 4, cornerRadius: 8, format: ImageFactory.PNG };
+					expect(imagefactory.imageRoundedCorner(blob,newParam)).toEqual(jasmine.any(Function));
+				});
+			});
+			describe('imageTransparentBorder',  () =>{
+				it('to make border transparent for given border size',  () =>{
+					var newParam = { borderSize: 10, format: ImageFactory.PNG };
+					expect(imagefactory.imageTransparentBorder(blob,newParam)).toEqual(jasmine.any(Function));
+				});
+			});
+			describe('imageAlpha',  () =>{
+				it('to verify the image alpha layer',  () =>{
+					var newParam = {format: imagefactory.PNG };
+					expect(imagefactory.imageAlpha(blob,newParam)).toEqual(jasmine.any(Function));
+				});
+			});
+			describe('imageRotate',  () =>{
+				it('to rotate the image on given angle',  () =>{
+					var newParam = 10.0;
+					expect(imagefactory.imageRotate(blob,newParam)).toEqual(jasmine.any(Function));
 				});
 			});
 })
