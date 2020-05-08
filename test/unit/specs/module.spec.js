@@ -10,11 +10,6 @@ describe('ti.imagefactory', function () {
 		expect(imagefactory).toBeDefined();
 	});
 
-	beforeEach(() => {
-		var imageFilename = "flower.jpg";
-		var newBlob = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory + imageFilename).read();
-		});
-
 	describe('constants', () => {
 		describe('TRANSFORM_*', () => {
 			it('TRANSFORM_CROP', () => {
@@ -68,86 +63,51 @@ describe('ti.imagefactory', function () {
 			});
 		});
 	});
-		describe ('hasAlpha' , () =>{
-				it('imgage should has an alpha layer',  () =>{
-					expect(imagefactory.hasAlpha(newBlob)).toEqual(true);
+			beforeEach(() => {
+        		var imageFilename = "flower.jpg";
+        		var newBlob = Ti.Filesystem.getFile(Ti.Filesystem.resourcesDirectory, `images/${imageFilename}`).read();
+				expect(newBlob).not.toBeNull();
+			});
+			describe ('imageWithRotation' , () =>{
+				it('to rotate the image context',  () =>{
+					var degree = 10.0;
+					expect(imagefactory.imageWithRotation(newBlob,degree)).toEqual(jasmine.any(Function));
 				});
 			});
 			describe('imageWithAlpha',  () =>{
-				it('to returns a copy of the given image and check image should has an alpha layer ',  () =>{
-					expect(imagefactory.hasAlpha(newBlob)).toEqual(true);
-					expect(imagefactory.imageWithAlpha(newBlob)).toEqual(jasmine.any(Function));
+				it('should have an alpha layer',  () =>{
+					expect(imagefactory.hasAlpha(newBlob)).toEqual(jasmine.any(Function));
 				});
 			});
-			describe('transparentBorderImage',  () =>{
+			describe('imageWithTransparentBorder',  () =>{
 				it('to returns a copy of the image with a transparent border of the given size added around its edges',  () =>{
 					expect(imagefactory.hasAlpha(newBlob)).toEqual(true);
 					var borderSize = 5;
-					var rotateImage = imagefactory.transparentBorderImage(newBlob,borderSize);
-					expect(rotateImage).toEqual(newBlob);
+					expect(imagefactory.imageWithTransparentBorder(newBlob,borderSize)).toEqual(jasmine.any(Function));
 				});
 			});
-			describe('croppedImage',  () =>{
-				it('to returns a copy of this image that is cropped to the given bounds',  () =>{
-					let newImage = imagefactory.croppedImage(newBlob);
-					expect(newImage).toEqual(newBlob);
-				});
-			});
-			describe('rotateImage',  () =>{
-				it('to rotate the image context',  () =>{
-					var rotateImage = imagefactory.rotateImage(newBlob,degree)
-					var degree = 10.0;
-					expect(rotateImage).toEqual(newBlob);
-				});
-			});
-			describe('roundedCornerImage',  () =>{
-				it('to creates a copy of this image with rounded corners',  () =>{
-					var cornerSize = 8;
-					var borderSize = 4;
-					var roundedImage = imagefactory.roundedCornerImage(newBlob,cornerSize,borderSize)
-					expect(roundedImage).toEqual(newBlob);
-				});
-			});
-			describe('imageCrop',  () =>{
+			describe('imageAsCropped',  () =>{
 				it('to crop image as per given coordinates',  () =>{
 					var newParam = { width: 100, height: 100, x: 50, y: 50 };
 					expect(imagefactory.imageAsCropped(blob,newParam)).toEqual(jasmine.any(Function));
 				});
 			});
-			describe('imageResize',  () =>{
+			describe('imageAsResized',  () =>{
 				it('to resize the image for given width anf height',  () =>{
 					var newParam = { width: 140, height: 140 };
-					expect(imagefactory.imageResize(blob,newParam)).toEqual(jasmine.any(Function));
+					expect(imagefactory.imageAsResized(blob,newParam)).toEqual(jasmine.any(Function));
 				});
 			});
-			describe('imageThumbnail',  () =>{
+			describe('imageAsThumbnail',  () =>{
 				it('to create image thumbnail',  () =>{
 					var newParam = { size: 64, borderSize: 5, cornerRadius: 10, format: ImageFactory.PNG };
-					expect(imagefactory.imageThumbnail(blob,newParam)).toEqual(jasmine.any(Function));
+					expect(imagefactory.imageAsThumbnail(blob,newParam)).toEqual(jasmine.any(Function));
 				});
 			});
-			describe('imageRoundedCorner',  () =>{
+			describe('imageWithRoundedCorner',  () =>{
 				it('to make the rounded corner image',  () =>{
 					var newParam = { borderSize: 4, cornerRadius: 8, format: ImageFactory.PNG };
-					expect(imagefactory.imageRoundedCorner(blob,newParam)).toEqual(jasmine.any(Function));
+					expect(imagefactory.imageWithRoundedCorner(blob,newParam)).toEqual(jasmine.any(Function));
 				});
 			});
-			describe('imageTransparentBorder',  () =>{
-				it('to make border transparent for given border size',  () =>{
-					var newParam = { borderSize: 10, format: ImageFactory.PNG };
-					expect(imagefactory.imageTransparentBorder(blob,newParam)).toEqual(jasmine.any(Function));
-				});
-			});
-			describe('imageAlpha',  () =>{
-				it('to verify the image alpha layer',  () =>{
-					var newParam = {format: imagefactory.PNG };
-					expect(imagefactory.imageAlpha(blob,newParam)).toEqual(jasmine.any(Function));
-				});
-			});
-			describe('imageRotate',  () =>{
-				it('to rotate the image on given angle',  () =>{
-					var newParam = 10.0;
-					expect(imagefactory.imageRotate(blob,newParam)).toEqual(jasmine.any(Function));
-				});
-			});
-})
+});
