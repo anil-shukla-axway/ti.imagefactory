@@ -7,7 +7,6 @@ describe('ti.imagefactory', function () {
 
 	it('can be required', () => {
 		imagefactory = require('ti.imagefactory');
-
 		expect(imagefactory).toBeDefined();
 	});
 
@@ -65,66 +64,62 @@ describe('ti.imagefactory', function () {
 		});
 	});
 
-	describe('methods', () => {
-		var newBlob = '';
-		beforeEach(() => {
-			let imageFilename = 'flower.jpg';
-			newBlob = Ti.Filesystem.getFile(Ti.Filesystem.resourcesDirectory, `images/${imageFilename}`).read();
-		});
-
-		describe('imageWithRotation', () => {
-			it('to rotate the image context',  () => {
-				var degree = 10.0;
-
-				expect(imagefactory.imageWithRotation(newBlob, degree)).toEqual(jasmine.any(Function));
+		describe ('methods' , () =>{
+			describe ('imageWithRotation' , () =>{
+				it('to rotate the image context',  () =>{
+						var fileSystem = Ti.Filesystem.getFile(Ti.Filesystem.resourcesDirectory, 'flower.jpg.keep');
+						const newBlob = fileSystem.read();
+						var degree = 10.0;
+						expect(imagefactory.imageWithRotation(newBlob,degree)).toEqual(jasmine.any(Object));
+				});
 			});
-		});
-
-		describe('imageWithAlpha',  () => {
-			it('should have an alpha layer',  () => {
-				expect(imagefactory.hasAlpha(newBlob)).toEqual(jasmine.any(Function));
+			describe('imageWithAlpha',  () =>{
+				it('should have an alpha layer',  () =>{
+					var fileSystem = Ti.Filesystem.getFile(Ti.Filesystem.resourcesDirectory, 'flower.jpg.keep');
+					const newBlob = fileSystem.read();
+					var newParam = { format: imagefactory.PNG };
+					expect(imagefactory.imageWithAlpha(newBlob,newParam)).toEqual(jasmine.any(Object));
+				});
 			});
-		});
-
-		describe('imageWithTransparentBorder',  () => {
-			it('to returns a copy of the image with a transparent border of the given size added around its edges',  () => {
-				expect(imagefactory.hasAlpha(newBlob)).toEqual(true);
-				var borderSize = 5;
-
-				expect(imagefactory.imageWithTransparentBorder(newBlob, borderSize)).toEqual(jasmine.any(Function));
+			describe('imageWithTransparentBorder',  () =>{
+				it('to returns a copy of the image with a transparent border of the given size added around its edges',  () =>{
+					var fileSystem = Ti.Filesystem.getFile(Ti.Filesystem.resourcesDirectory, 'flower.jpg.keep');
+					const newBlob = fileSystem.read();
+					var borderSize = 5;
+					expect(imagefactory.imageWithTransparentBorder(newBlob,borderSize)).toEqual(jasmine.any(Object));
+				});
 			});
-		});
-
-		describe('imageAsCropped',  () => {
-			it('to crop image as per given coordinates',  () => {
-				var newParam = { width: 100, height: 100, x: 50, y: 50 };
-
-				expect(imagefactory.imageAsCropped(newBlob, newParam)).toEqual(jasmine.any(Function));
+			describe('imageAsCropped',  () =>{
+				it('to crop image as per given coordinates',  () =>{
+					var fileSystem = Ti.Filesystem.getFile(Ti.Filesystem.resourcesDirectory, 'flower.jpg.keep');
+					const newBlob = fileSystem.read();
+					var newParam = { width: 100, height: 100, x: 50, y: 50 };
+					expect(imagefactory.imageAsCropped(newBlob,newParam)).toEqual(jasmine.any(Object));
+				});
 			});
-		});
-
-		describe('imageAsResized',  () => {
-			it('to resize the image for given width anf height',  () => {
-				var newParam = { width: 140, height: 140 };
-
-				expect(imagefactory.imageAsResized(newBlob, newParam)).toEqual(jasmine.any(Function));
+			describe('imageAsResized',  () =>{
+				it('to resize the image for given width anf height',  () =>{
+					var fileSystem = Ti.Filesystem.getFile(Ti.Filesystem.resourcesDirectory, 'flower.jpg.keep');
+					const newBlob = fileSystem.read();
+					var newParam = { width: 140, height: 140 };
+					expect(imagefactory.imageAsResized(newBlob,newParam)).toEqual(jasmine.any(Object));
+				});
 			});
-		});
-
-		describe('imageAsThumbnail',  () => {
-			it('to create image thumbnail',  () => {
-				var newParam = { size: 64, borderSize: 5, cornerRadius: 10, format: imagefactory.PNG };
-
-				expect(imagefactory.imageAsThumbnail(newBlob, newParam)).toEqual(jasmine.any(Function));
+			describe('imageAsThumbnail',  () =>{
+				it('to create image thumbnail',  () =>{
+					var fileSystem = Ti.Filesystem.getFile(Ti.Filesystem.resourcesDirectory, 'flower.jpg.keep');
+					const newBlob = fileSystem.read();
+					var newParam = { size: 64, borderSize: 5, cornerRadius: 10, format: imagefactory.PNG };
+					expect(imagefactory.imageAsThumbnail(newBlob,newParam)).toEqual(jasmine.any(Object));
+				});
 			});
-		});
-
-		describe('imageWithRoundedCorner',  () => {
-			it('to make the rounded corner image',  () => {
-				var newParam = { borderSize: 4, cornerRadius: 8, format: imagefactory.PNG };
-
-				expect(imagefactory.imageWithRoundedCorner(newBlob, newParam)).toEqual(jasmine.any(Function));
+			describe('imageWithRoundedCorner',  () =>{
+				it('to make the rounded corner image',  () =>{
+					var fileSystem = Ti.Filesystem.getFile(Ti.Filesystem.resourcesDirectory, 'flower.jpg.keep');
+					const newBlob = fileSystem.read();
+					var newParam = { borderSize: 4, cornerRadius: 8, format: imagefactory.PNG };
+					expect(imagefactory.imageWithRoundedCorner(newBlob,newParam)).toEqual(jasmine.any(Object));
+				});
 			});
-		});
 	});
 });
